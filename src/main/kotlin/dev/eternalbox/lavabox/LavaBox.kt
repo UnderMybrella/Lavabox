@@ -1,13 +1,15 @@
-package org.abimon.lavabox
+package dev.eternalbox.lavabox
 
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager
 import com.sedmelluq.discord.lavaplayer.player.FunctionalResultHandler
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackState
-import kotlinx.coroutines.experimental.launch
-import kotlinx.coroutines.experimental.yield
-import org.abimon.kjukebox.InfiniteJukeboxBeat
-import org.abimon.kjukebox.InfiniteJukeboxTrack
+import dev.eternalbox.kjukebox.InfiniteJukeboxBeat
+import dev.eternalbox.kjukebox.InfiniteJukeboxTrack
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.yield
 import java.io.*
 import java.util.*
 import java.util.concurrent.ConcurrentLinkedQueue
@@ -59,7 +61,7 @@ object LavaBox {
             val isFinished = AtomicBoolean(false)
 
             manager.loadItem(audioPath, FunctionalResultHandler({ lavaTrack ->
-                launch {
+                GlobalScope.launch {
                     while (isActive && lavaTrack.state != AudioTrackState.FINISHED) {
                         yield()
                         audioFrames.add(JukeboxFrame(player.provide() ?: continue))

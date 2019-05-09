@@ -1,4 +1,4 @@
-package org.abimon.lavabox
+package dev.eternalbox.lavabox
 
 import com.sedmelluq.discord.lavaplayer.track.playback.AudioFrame
 import java.util.*
